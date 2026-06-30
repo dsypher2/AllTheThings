@@ -1,6 +1,11 @@
 -- Memory diagnostics, delayed cleanup, automatic zone maintenance, and search-index maintenance for ATT.
 local appName, app = ...
 
+-- Retail uses the compact search index and automatic maintenance. Classic keeps the
+-- original array-compatible index contract and does not run Retail index compaction or
+-- incremental cleanup scheduling.
+if not app.IsRetail then return end
+
 local collectgarbage, pcall, type, pairs = collectgarbage, pcall, type, pairs
 local sort = table.sort
 local GetAddOnMemoryUsage, UpdateAddOnMemoryUsage = GetAddOnMemoryUsage, UpdateAddOnMemoryUsage
