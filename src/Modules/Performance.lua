@@ -3,6 +3,11 @@
 -- /att profile start and adds only a single boolean branch to wrapped functions.
 local appName, app = ...
 
+-- The r8 profiler wraps Retail window and collection pipelines. Keep Classic on the
+-- original execution path; this avoids introducing wrapper/order changes into clients
+-- which use different profession, achievement, mount, and pet implementations.
+if not app.IsRetail then return end
+
 local debugprofilestop = debugprofilestop
 local GetTimePreciseSec = GetTimePreciseSec
 local pairs, type, tostring, select = pairs, type, tostring, select
