@@ -2351,13 +2351,13 @@ local function BuildWindow(suffix)
 
 	-- Some Window functions should be triggered from ATT events
 	window:AddEventHandler("OnUpdateWindows", function(...)
-		window:QueueUpdate(...)
+		if app.IsRetail then window:QueueUpdate(...) else window:Update(...) end
 	end, true)
 	window:AddEventHandler("OnRefreshWindows", function(...)
-		window:QueueRefresh(...)
+		if app.IsRetail then window:QueueRefresh(...) else window:Refresh(...) end
 	end, true)
 	window:AddEventHandler("OnRedrawWindows", function()
-		window:QueueRedraw()
+		if app.IsRetail then window:QueueRedraw() else window:Redraw() end
 	end, true)
 	window:AddEventHandler("OnWindowCreated", function()
 		-- ugh the sequencing of things is still so wacky. windows being created before settings exist is still happening
