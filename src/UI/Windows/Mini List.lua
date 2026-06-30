@@ -484,15 +484,15 @@ app:CreateWindow("MiniList", {
 		-- don't allow bad values
 		mapID = tonumber(mapID) or 0
 		-- app.PrintDebug("SetMapID",mapID,force)
-		if not force and mapID == self.mapID then
+		if app.IsRetail and not force and mapID == self.mapID then
 			self:Show();
 			return;
 		end
 		-- Multiple child/subzone map IDs can point at the exact same consolidated Mini List
 		-- object. Update the effective map ID and reuse the existing rows instead of
 		-- detaching, filling, and updating an identical tree.
-		local equivalentMapData = not force and rawget(CachedMapData, mapID);
-		if self.data and equivalentMapData == self.data then
+		local equivalentMapData = app.IsRetail and not force and rawget(CachedMapData, mapID);
+		if app.IsRetail and self.data and equivalentMapData == self.data then
 			self.mapID = mapID;
 			self.data.mapID = mapID;
 			self:Show();
